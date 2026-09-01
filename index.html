@@ -242,7 +242,7 @@ const slidesHTML = [
   <h1 class="title reveal-el" style="font-size:24px;">Pra onde nosso dinheiro foi, nesse tempo sem planejamento?</h1>
   <div class="donut-wrap reveal-el">
     <div class="donut" id="donut" style="background: conic-gradient(var(--plum) 0% 40%, var(--rose) 40% 90%, var(--gold) 90% 100%);">
-      <div class="hole"><strong id="donutCenter">antes</strong><span>3 grupos</span></div>
+      <div class="hole"><strong id="donutCenter">antes</strong><span id="donutGroups">3 grupos</span></div>
     </div>
     <div class="legend" id="legend"></div>
   </div>
@@ -268,7 +268,7 @@ const slidesHTML = [
   <h1 class="title reveal-el">Depois disso... MAIS UMA META ATINGIDAAA! 🥹</h1>
   <div class="achieve-card reveal-el">
     <p style="margin:0; font-weight:700; color:var(--ink);">Imposto de Renda</p>
-    <p style="margin:4px 0 0; font-size:14px;">Quitado! Então agora é só pensar nisso de novo ano que vem!</p>
+    <p style="margin:4px 0 0; font-size:14px;">Quitado! Então agora é só pensar nisso de novo, ano que vem!</p>
     <div class="stamp">quitado ✓</div>
   </div>
 </div>`,
@@ -276,12 +276,12 @@ const slidesHTML = [
 // 7 - carro
 `<div class="slide-inner">
   <p class="eyebrow reveal-el"><span class="num">7</span> E pra fechar com chave de ouro</p>
-  <h1 class="title reveal-el">E pra fechar, o que tirava nosso sono, aquela dívida chatinha, ai credo...</h1>
+  <h1 class="title reveal-el">E pra fechar, o que tirava nosso sono, aquela dívida chatinha, ai, credo...</h1>
   <div class="achieve-card reveal-el">
     <p style="margin:0; font-weight:700; color:var(--ink);">Empréstimo do carro</p>
     <p class="parcelas-num"><span id="parcelasCount">9</span> de 25 parcelas quitadas!!!!</p>
     <div class="bar-track"><div class="bar-fill"></div></div>
-    <p style="margin:0; font-size:13px;">E olha que faltam só 16 agora! Mdsss, lembra do sentimento de que essa dívida não ia acabar nunca? Pois é, ta acabandooo. Xô, dívidaaaa 👋</p>
+    <p style="margin:0; font-size:13px;">E olha que faltam só 16 agora! Mdsss, lembra do sentimento de que essa dívida não ia acabar nunca? Pois é, tá acabandooo. Xô, dívidaaaa 👋</p>
   </div>
 </div>`,
 
@@ -406,13 +406,15 @@ const states = {
   antes: {
     gradient:"conic-gradient(var(--plum) 0% 40%, var(--rose) 40% 90%, var(--gold) 90% 100%)",
     center:"antes",
+    groups:"3 grupos",
     caption:"40% essenciais, 50% lazer e 10% gastos não programados, tudo sem intenção, simplesmente acontecendo.",
     items:[{label:'Essenciais',val:'40%',color:'var(--plum)'},{label:'Lazer',val:'50%',color:'var(--rose)'},{label:'Não programado',val:'10%',color:'var(--gold)'}]
   },
   depois: {
     gradient:"conic-gradient(var(--plum) 0% 40%, var(--rose) 40% 44%, var(--gold) 44% 48%, var(--sage) 48% 100%)",
     center:"depois",
-    caption:"Agora mais da metade vai pra quitar o cartão, adiantar parcelas e investir.",
+    groups:"4 grupos",
+    caption:"Agora, mais da metade vai pra quitar o cartão, adiantar parcelas e investir.",
     items:[{label:'Essenciais',val:'40%',color:'var(--plum)'},{label:'Lazer',val:'4%',color:'var(--rose)'},{label:'Não programado',val:'4%',color:'var(--gold)'},{label:'Cartão, parcelas e investimentos',val:'52%',color:'var(--sage)'}]
   }
 };
@@ -428,6 +430,7 @@ deck.addEventListener('click', (e) => {
   const s = states[btn.dataset.state];
   document.getElementById('donut').style.background = s.gradient;
   document.getElementById('donutCenter').textContent = s.center;
+  document.getElementById('donutGroups').textContent = s.groups;
   document.getElementById('donutCaption').textContent = s.caption;
   renderLegend(s.items);
 });
