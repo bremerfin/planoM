@@ -150,8 +150,8 @@
 
   /* ---------- Meme reveal ---------- */
   .meme-reveal{ max-height:0; overflow:hidden; opacity:0; transition:max-height .6s ease, opacity .5s ease .1s; }
-  .meme-reveal.show{ max-height:420px; opacity:1; margin-top:18px; }
-  .meme-reveal img{ max-width:220px; width:100%; border-radius:14px; box-shadow:var(--shadow); border:1px solid var(--line); display:block; margin:0 auto; }
+  .meme-reveal.show{ max-height:520px; opacity:1; margin-top:18px; }
+  .meme-reveal img{ max-width:220px; width:100%; height:auto; border-radius:14px; box-shadow:var(--shadow); border:1px solid var(--line); display:block; margin:0 auto; }
 
   /* ---------- Signature ---------- */
   .signoff{ margin-top:16px; }
@@ -161,33 +161,36 @@
   .restart-btn:hover{ border-color:var(--rose); color:var(--rose-deep); }
 
   /* ---------- Nav ---------- */
-  #nav-arrows{ position:fixed; inset:0; display:flex; justify-content:space-between; align-items:center; padding:0 8px; pointer-events:none; z-index:40; }
-  .arrow-btn{ pointer-events:auto; width:44px; height:44px; border-radius:50%; border:1px solid var(--line); background:rgba(255,255,255,.85); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:.2s ease; color:var(--ink); box-shadow:0 8px 18px -10px rgba(42,27,46,.3); }
+  #nav-bar{ position:fixed; bottom:16px; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:12px; background:rgba(255,255,255,.92); backdrop-filter:blur(8px); padding:7px 10px; border-radius:100px; box-shadow:var(--shadow); z-index:40; border:1px solid var(--line); }
+  .arrow-btn{ pointer-events:auto; width:38px; height:38px; border-radius:50%; border:1px solid var(--line); background:var(--paper); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:.2s ease; color:var(--ink); flex:none; }
   .arrow-btn:hover{ background:var(--ink); color:#fff; }
   .arrow-btn.hidden{ opacity:0; pointer-events:none; }
-  #dots{ position:fixed; bottom:18px; left:50%; transform:translateX(-50%); display:flex; gap:7px; z-index:40; }
+  #dots{ display:flex; gap:6px; align-items:center; padding:0 2px; }
   #dots .d{ width:6px; height:6px; border-radius:50%; background:var(--line); transition:.25s ease; cursor:pointer; }
-  #dots .d.active{ background:var(--rose); width:20px; border-radius:4px; }
+  #dots .d.active{ background:var(--rose); width:18px; border-radius:4px; }
 
   @media (max-width:560px){
-    .arrow-btn{ width:38px; height:38px; }
-    .slide{ padding:26px 20px 60px; }
+    .slide{ padding:22px 20px 96px; }
+    .flip-card{ width:210px; height:126px; }
+    .meme-reveal img{ max-width:170px; }
+    .meme-reveal.show{ max-height:320px; }
   }
 </style>
 </head>
 <body>
 
+
 <div id="deck"></div>
 
-<div id="nav-arrows">
+<div id="nav-bar">
   <button class="arrow-btn" id="prevBtn" aria-label="Anterior">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </button>
+  <div id="dots"></div>
   <button class="arrow-btn" id="nextBtn" aria-label="Próximo">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </button>
 </div>
-<div id="dots"></div>
 <canvas id="confetti-canvas"></canvas>
 
 <script>
@@ -361,8 +364,7 @@ function render(){
   });
   document.getElementById('prevBtn').classList.toggle('hidden', current <= 1);
   document.getElementById('nextBtn').classList.toggle('hidden', current === 0 || current === total-1);
-  dotsEl.style.display = current === 0 ? 'none' : 'flex';
-  document.getElementById('nav-arrows').style.display = current === 0 ? 'none' : 'flex';
+  document.getElementById('nav-bar').style.display = current === 0 ? 'none' : 'flex';
 
   if(current === 7){
     const el = document.getElementById('parcelasCount');
@@ -410,8 +412,8 @@ const states = {
   depois: {
     gradient:"conic-gradient(var(--plum) 0% 40%, var(--rose) 40% 44%, var(--gold) 44% 48%, var(--sage) 48% 100%)",
     center:"depois",
-    caption:"Essenciais e cuidado pessoal viraram um bloco só, e mais da metade do orçamento agora vai pra quitar o cartão, adiantar as parcelas do empréstimo e investir. Lazer e imprevisto continuam garantidos, só que como escolha, não como sobra.",
-    items:[{label:'Essenciais',val:'40% · R$ 4.830',color:'var(--plum)'},{label:'Lazer',val:'4% · R$ 500',color:'var(--rose)'},{label:'Não programado',val:'4% · R$ 500',color:'var(--gold)'},{label:'Cartão, parcelas e investimentos',val:'52% · R$ 6.349,62',color:'var(--sage)'}]
+    caption:"Agora mais da metade vai pra quitar o cartão, adiantar parcelas e investir.",
+    items:[{label:'Essenciais',val:'40%',color:'var(--plum)'},{label:'Lazer',val:'4%',color:'var(--rose)'},{label:'Não programado',val:'4%',color:'var(--gold)'},{label:'Cartão, parcelas e investimentos',val:'52%',color:'var(--sage)'}]
   }
 };
 function renderLegend(items){
